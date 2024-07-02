@@ -88,9 +88,9 @@
             var userInput = document.getElementById('userInput').value.trim().toLowerCase();
             var resultElement = document.getElementById('result');
             var counterElement = document.getElementById('counter');
-            var correctRomaji = hangulToRomaji[currentHangul];
+            var correctHangul = Hangula[currentHangul];
 
-            if (userInput === correctRomaji) {
+            if (userInput === correctHangul) {
                 correctCounter++; // Increment the counter
                 resultElement.textContent = "Input is correct!";
                 resultElement.style.color = "green";
