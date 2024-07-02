@@ -1,0 +1,68 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+#myForm {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+#myForm label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+#myForm input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 24px;
+    box-sizing: border-box; /* Ensure padding and border are included in width calculation */
+    text-align: center; /* Center align text inside input */
+
+}
+
+#myForm button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#myForm button:hover {
+    background-color: #45a049;
+}
+
+#hangulCharacter {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+}
+
+#result {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+#counter {
+    margin-top: 20px;
+    font-size: 16px;
+}

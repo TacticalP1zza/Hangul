@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangul to Romaji Practice</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        #myForm {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #myForm label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        #myForm input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 24px;
+            box-sizing: border-box; /* Ensure padding and border are included in width calculation */
+            text-align: center; /* Center align text inside input */
+        }
+
+        #myForm button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #myForm button:hover {
+            background-color: #45a049;
+        }
+
+        #hangulCharacter {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        #result {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        #counter {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm">
+        <div>
+            <input type="checkbox" id="consonants" checked>
+            <label for="consonants">ㄱ, ㄴ, ㄷ, ㄹ, ㅁ, ㅂ, ㅅ, ㅈ, ㅎ, ㅊ</label>
+            <input type="checkbox" id="vowels" checked>
+            <label for="vowels">ㅐ, ㅑ, ㅒ, ㅔ, ㅕ, ㅖ, ㅠ</label>
+            <input type="checkbox" id="vowels2" checked>
+            <label for="vowels">ㅣ, ㅏ,ㅓ,ㅗ, ㅛ,ㅡ,ㅜ</label>
+        </div>
+        <div id="hangulCharacter"></div>
+        <input type="text" id="userInput" required>
+        <button type="submit">Submit</button>
+        <div id="result"></div>
+    <div id="counter">Score: 0</div>
+    </form>
+    
+
+    <script>
+        const hangulToRomaji = {
+            "ㄱ": "k",
+            "ㄴ": "n",
+            "ㄷ": "d",
+            "ㄹ": "r/l",
+            "ㅁ": "m",
+            "ㅂ": "b",
+            "ㅅ": "s",
+            "ㅈ": "j",
+            "ㅎ": "h",
+            "ㅊ": "ch",
+            "ㅣ": "i",
+            "ㅏ": "a",
+            "ㅐ": "ae",
+            "ㅑ": "ya",
+            "ㅒ": "yae",
+            "ㅓ": "eo",
+            "ㅔ": "e",
+            "ㅕ": "yeo",
+            "ㅖ": "ye",
+            "ㅗ": "o",
+            "ㅛ": "yo",
+            "ㅜ": "u",
+            "ㅠ": "yu",
+            "ㅡ": "eu"
+        };
+
+        const consonants = ["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ", "ㅂ", "ㅅ", "ㅈ", "ㅎ", "ㅊ"];
+        const vowels = [ "ㅐ", "ㅑ", "ㅒ", "ㅔ", "ㅕ", "ㅖ", "ㅠ"];
+        const vowels2 = ["ㅣ", "ㅏ","ㅓ","ㅗ", "ㅛ","ㅡ","ㅜ"];
+        
+        let correctCounter = 0; // Initialize the counter
+
+        function getRandomHangul(selectedHangul) {
+            const randomIndex = Math.floor(Math.random() * selectedHangul.length);
+            return selectedHangul[randomIndex];
+        }
+
+        function displayNewHangul() {
+            let selectedHangul = [];
+            if (document.getElementById('consonants').checked) {
+                selectedHangul = selectedHangul.concat(consonants);
+            }
+            if (document.getElementById('vowels').checked) {
+                selectedHangul = selectedHangul.concat(vowels);
+            }
+            if (document.getElementById('vowels2').checked) {
+                selectedHangul = selectedHangul.concat(vowels2);
+            }
+            const hangul = getRandomHangul(selectedHangul);
+            document.getElementById('hangulCharacter').textContent = hangul;
+            return hangul;
+        }
+
+        // Display a random Hangul character on page load
+        let currentHangul = displayNewHangul();
+
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting
+
+            var userInput = document.getElementById('userInput').value.trim().toLowerCase();
+            var resultElement = document.getElementById('result');
+            var counterElement = document.getElementById('counter');
+            var correctRomaji = hangulToRomaji[currentHangul];
+
+            if (userInput === correctRomaji) {
+                correctCounter++; // Increment the counter
+                resultElement.textContent = "Input is correct!";
+                resultElement.style.color = "green";
+            } else {
+                resultElement.textContent = `Input is incorrect. The correct answer is ${correctRomaji}.`;
+                resultElement.style.color = "red";
+            }
+
+            counterElement.textContent = "Correct attempts: " + correctCounter; // Update the counter display
+
+            // Reset the form input field
+            document.getElementById('userInput').value = '';
+
+            // Display a new random Hangul character
+            currentHangul = displayNewHangul();
+        });
+
+        // Update the displayed Hangul character when checkboxes are changed
+        document.getElementById('consonants').addEventListener('change', displayNewHangul);
+        document.getElementById('vowels').addEventListener('change', displayNewHangul);
+    </script>
+</body>
+</html>
+
