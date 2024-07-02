@@ -24,7 +24,7 @@ body {
     font-size: 16px;
 }
 
-#myForm input {
+#myForm input[type="text"] {
     width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 20px;
@@ -33,7 +33,6 @@ body {
     font-size: 24px;
     box-sizing: border-box; /* Ensure padding and border are included in width calculation */
     text-align: center; /* Center align text inside input */
-
 }
 
 #myForm button {
