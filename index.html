@@ -14,13 +14,13 @@
             <input type="checkbox" id="vowels" checked>
             <label for="vowels">ㅐ, ㅑ, ㅒ, ㅔ, ㅕ, ㅖ, ㅠ</label>
             <input type="checkbox" id="vowels2" checked>
-            <label for="vowels">ㅣ, ㅏ,ㅓ,ㅗ, ㅛ,ㅡ,ㅜ</label>
+            <label for="vowels2">ㅣ, ㅏ,ㅓ,ㅗ, ㅛ,ㅡ,ㅜ</label>
         </div>
         <div id="hangulCharacter"></div>
-        <input type="text" id="userInput" autocomplete="off" required>
+        <input type="text" id="userInput" autocomplete="off">
         <button type="submit">Submit</button>
         <div id="result"></div>
-    <div id="counter">Score: 0</div>
+        <div id="counter">Score: 0</div>
     </form>
     
 
@@ -29,7 +29,7 @@
             "ㄱ": "k",
             "ㄴ": "n",
             "ㄷ": "d",
-            "ㄹ": "r/l",
+            "ㄹ": "r",
             "ㅁ": "m",
             "ㅂ": "b",
             "ㅅ": "s",
@@ -74,9 +74,9 @@
             if (document.getElementById('vowels2').checked) {
                 selectedHangul = selectedHangul.concat(vowels2);
             }
-            const hangul = getRandomHangul(selectedHangul);
-            document.getElementById('hangulCharacter').textContent = hangul;
-            return hangul;
+            const hangulChar = getRandomHangul(selectedHangul);
+            document.getElementById('hangulCharacter').textContent = hangulChar;
+            return hangulChar;
         }
 
         // Display a random Hangul character on page load
@@ -88,18 +88,18 @@
             var userInput = document.getElementById('userInput').value.trim().toLowerCase();
             var resultElement = document.getElementById('result');
             var counterElement = document.getElementById('counter');
-            var correctHangul = Hangula[currentHangul];
+            var correctHangul = hangul[currentHangul];
 
             if (userInput === correctHangul) {
                 correctCounter++; // Increment the counter
                 resultElement.textContent = "Input is correct!";
                 resultElement.style.color = "green";
             } else {
-                resultElement.textContent = `Input is incorrect. The correct answer is ${correctRomaji}.`;
+                resultElement.textContent = `Input is incorrect. The correct answer is ${correctHangul}.`;
                 resultElement.style.color = "red";
             }
 
-            counterElement.textContent = "Correct attempts: " + correctCounter; // Update the counter display
+            counterElement.textContent = "Score: " + correctCounter; // Update the counter display
 
             // Reset the form input field
             document.getElementById('userInput').value = '';
@@ -111,7 +111,7 @@
         // Update the displayed Hangul character when checkboxes are changed
         document.getElementById('consonants').addEventListener('change', displayNewHangul);
         document.getElementById('vowels').addEventListener('change', displayNewHangul);
+        document.getElementById('vowels2').addEventListener('change', displayNewHangul);
     </script>
 </body>
 </html>
-
