@@ -2,53 +2,124 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #myForm {
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    padding: 24px;
+    max-width: 460px;
     width: 100%;
     text-align: center;
+    box-sizing: border-box;
 }
 
-#myForm label {
+h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+.controls {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.controls strong {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-size: 16px;
 }
 
+#myForm label {
+    display: inline-block;
+    margin: 4px 12px 8px 4px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#myForm input[type="checkbox"] {
+    cursor: pointer;
+}
+
+#mode {
+    margin-top: 20px;
+    font-size: 17px;
+    color: #555;
+    font-weight: bold;
+}
+
+#cardPrompt {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 22px 0 12px;
+    display: block;
+    line-height: 1.2;
+    word-break: keep-all;
+}
+
+#hint {
+    color: #777;
+    font-size: 15px;
+    min-height: 22px;
+    margin-bottom: 16px;
+}
+
 #myForm input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 20px;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 24px;
-    box-sizing: border-box; /* Ensure padding and border are included in width calculation */
-    text-align: center; /* Center align text inside input */
+    box-sizing: border-box;
+    text-align: center;
 }
 
 #myForm button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 18px;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    margin: 4px;
 }
 
 #myForm button:hover {
     background-color: #45a049;
 }
 
+#showAnswerButton {
+    background-color: #357edd;
+}
+
+#showAnswerButton:hover {
+    background-color: #276ac0;
+}
+
+#result {
+    margin-top: 14px;
+    font-size: 16px;
+    min-height: 44px;
+    line-height: 1.4;
+}
+
+#counter {
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Old ID support, just in case you still have it somewhere */
 #hangulCharacter {
     font-size: 48px;
     font-weight: bold;
@@ -56,12 +127,26 @@ body {
     display: block;
 }
 
-#result {
-    margin-top: 10px;
-    font-size: 16px;
-}
+/* Mobile cleanup */
+@media (max-width: 500px) {
+    #myForm {
+        padding: 18px;
+    }
 
-#counter {
-    margin-top: 20px;
-    font-size: 16px;
+    h1 {
+        font-size: 22px;
+    }
+
+    #cardPrompt {
+        font-size: 40px;
+    }
+
+    #myForm input[type="text"] {
+        font-size: 22px;
+    }
+
+    #myForm label {
+        font-size: 14px;
+        margin-right: 8px;
+    }
 }

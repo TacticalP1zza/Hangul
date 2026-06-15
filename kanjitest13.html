@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 13 Kanji Test Practice</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    #cardPrompt {
+      font-size: 2.5rem;
+      margin: 30px 0 10px;
+      font-weight: bold;
+    }
+
+    #mode {
+      font-size: 1.2rem;
+      color: #555;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #hint {
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"] {
+      font-size: 1.3rem;
+      padding: 8px;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: 8px 12px;
+      margin-top: 10px;
+      margin-right: 5px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      min-height: 40px;
+    }
+
+    #counter {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .controls {
+      margin-bottom: 18px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      max-width: 750px;
+    }
+
+    label {
+      margin-right: 12px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .target {
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+      font-weight: bold;
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="myForm">
+    <h1>Genki Lesson 13 Kanji Practice</h1>
+    <div class="subtitle">Practice in the same style as your kanji test sample.</div>
+
+    <div class="controls">
+      <strong>Test style:</strong><br>
+
+      <input type="checkbox" id="readingTest" checked>
+      <label for="readingTest">1. Kanji → hiragana reading</label>
+
+      <input type="checkbox" id="writingTest" checked>
+      <label for="writingTest">2. Hiragana → kanji writing</label>
+
+      <input type="checkbox" id="sentenceTest" checked>
+      <label for="sentenceTest">3. Sentence kanji writing</label>
+
+      <input type="checkbox" id="meaningTest">
+      <label for="meaningTest">Meaning review</label>
+    </div>
+
+    <div class="controls">
+      <strong>Content:</strong><br>
+
+      <input type="checkbox" id="singleKanji" checked>
+      <label for="singleKanji">Single kanji</label>
+
+      <input type="checkbox" id="vocabWords" checked>
+      <label for="vocabWords">Vocabulary words</label>
+
+      <div class="small-note">
+        For the real test, vocabulary words and sentence writing are probably the most important.
+      </div>
+    </div>
+
+    <div class="controls">
+      <strong>Pages:</strong><br>
+
+      <input type="checkbox" id="page274" checked>
+      <label for="page274">Page 274: 物〜肉</label>
+
+      <input type="checkbox" id="page275" checked>
+      <label for="page275">Page 275: 悪〜海</label>
+    </div>
+
+    <div id="mode"></div>
+    <div id="cardPrompt"></div>
+    <div id="hint"></div>
+
+    <input type="text" id="userInput" autocomplete="off" autofocus>
+    <br>
+
+    <button type="submit">Submit</button>
+    <button type="button" id="showAnswerButton">Show Answer</button>
+
+    <div id="result"></div>
+    <div id="counter">Score: 0 / 0</div>
+  </form>
+
+  <script>
+const cards = [
+  // Page 274 single kanji
+  {
+    jp: "物",
+    readings: ["もの", "ぶつ"],
+    en: ["thing", "object"],
+    kind: "single",
+    page: "274"
+  },
+  {
+    jp: "鳥",
+    readings: ["とり", "ちょう"],
+    en: ["bird"],
+    kind: "single",
+    page: "274"
+  },
+  {
+    jp: "料",
+    readings: ["りょう"],
+    en: ["fee", "ingredients", "material"],
+    kind: "single",
+    page: "274"
+  },
+  {
+    jp: "理",
+    readings: ["り"],
+    en: ["reason", "logic"],
+    kind: "single",
+    page: "274"
+  },
+  {
+    jp: "特",
+    readings: ["とく"],
+    en: ["special"],
+    kind: "single",
+    page: "274"
+  },
+  {
+    jp: "安",
+    readings: ["やす", "あん"],
+    en: ["cheap", "safe", "peaceful"],
+    kind: "single",
+    page: "274"
+  },
+  {
+    jp: "飯",
+    readings: ["はん"],
+    en: ["meal", "rice", "cooked rice"],
+    kind: "single",
+    page: "274"
+  },
+  {
+    jp: "肉",
+    readings: ["にく"],
+    en: ["meat"],
+    kind: "single",
+    page: "274"
+  },
+
+  // Page 275 single kanji
+  {
+    jp: "悪",
+    readings: ["わる", "あく"],
+    en: ["bad", "wrong", "evil"],
+    kind: "single",
+    page: "275"
+  },
+  {
+    jp: "体",
+    readings: ["からだ", "たい"],
+    en: ["body"],
+    kind: "single",
+    page: "275"
+  },
+  {
+    jp: "同",
+    readings: ["おな", "どう"],
+    en: ["same"],
+    kind: "single",
+    page: "275"
+  },
+  {
+    jp: "着",
+    readings: ["つ", "き", "ちゃく"],
+    en: ["arrive", "wear", "arrival"],
+    kind: "single",
+    page: "275"
+  },
+  {
+    jp: "空",
+    readings: ["そら", "くう", "あ"],
+    en: ["sky", "empty", "air"],
+    kind: "single",
+    page: "275"
+  },
+  {
+    jp: "港",
+    readings: ["みなと", "こう"],
+    en: ["port", "harbor", "harbour"],
+    kind: "single",
+    page: "275"
+  },
+  {
+    jp: "昼",
+    readings: ["ひる", "ちゅう"],
+    en: ["noon", "daytime", "lunch"],
+    kind: "single",
+    page: "275"
+  },
+  {
+    jp: "海",
+    readings: ["うみ", "かい"],
+    en: ["sea", "ocean"],
+    kind: "single",
+    page: "275"
+  },
+
+  // 物
+  {
+    jp: "食べ物",
+    readings: ["たべもの"],
+    en: ["food"],
+    kind: "word",
+    page: "274",
+    sentence: "日本の【たべもの】が好きです。"
+  },
+  {
+    jp: "飲み物",
+    readings: ["のみもの"],
+    en: ["drink", "beverage"],
+    kind: "word",
+    page: "274",
+    sentence: "コンビニで【のみもの】を買いました。"
+  },
+  {
+    jp: "買い物",
+    readings: ["かいもの"],
+    en: ["shopping"],
+    kind: "word",
+    page: "274",
+    sentence: "土曜日に【かいもの】をします。"
+  },
+  {
+    jp: "動物",
+    readings: ["どうぶつ"],
+    en: ["animal"],
+    kind: "word",
+    page: "274",
+    sentence: "動物園で【どうぶつ】を見ました。"
+  },
+  {
+    jp: "物価",
+    readings: ["ぶっか"],
+    en: ["commodity prices", "prices", "cost of living"],
+    kind: "word",
+    page: "274",
+    sentence: "日本は【ぶっか】が高いです。"
+  },
+
+  // 鳥
+  {
+    jp: "鳥",
+    readings: ["とり"],
+    en: ["bird"],
+    kind: "word",
+    page: "274",
+    sentence: "木に【とり】がいます。"
+  },
+  {
+    jp: "焼き鳥",
+    readings: ["やきとり"],
+    en: ["grilled chicken", "yakitori"],
+    kind: "word",
+    page: "274",
+    sentence: "昨日、【やきとり】を食べました。"
+  },
+  {
+    jp: "白鳥",
+    readings: ["はくちょう"],
+    en: ["swan"],
+    kind: "word",
+    page: "274",
+    sentence: "湖で【はくちょう】を見ました。"
+  },
+
+  // 料
+  {
+    jp: "料理",
+    readings: ["りょうり"],
+    en: ["cooking", "cuisine", "dish"],
+    kind: "word",
+    page: "274",
+    sentence: "日本の【りょうり】が好きです。"
+  },
+  {
+    jp: "料金",
+    readings: ["りょうきん"],
+    en: ["charge", "fee"],
+    kind: "word",
+    page: "274",
+    sentence: "この店の【りょうきん】は高いです。"
+  },
+  {
+    jp: "給料",
+    readings: ["きゅうりょう"],
+    en: ["salary", "wages", "pay"],
+    kind: "word",
+    page: "274",
+    sentence: "アルバイトの【きゅうりょう】をもらいました。"
+  },
+  {
+    jp: "授業料",
+    readings: ["じゅぎょうりょう"],
+    en: ["tuition", "tuition fee"],
+    kind: "word",
+    page: "274",
+    sentence: "大学の【じゅぎょうりょう】は高いです。"
+  },
+
+  // 理
+  {
+    jp: "理由",
+    readings: ["りゆう"],
+    en: ["reason"],
+    kind: "word",
+    page: "274",
+    sentence: "その【りゆう】が分かりません。"
+  },
+  {
+    jp: "地理",
+    readings: ["ちり"],
+    en: ["geography"],
+    kind: "word",
+    page: "274",
+    sentence: "高校で【ちり】を勉強しました。"
+  },
+  {
+    jp: "無理",
+    readings: ["むり"],
+    jpAnswers: ["無理", "無理な"],
+    en: ["impossible", "unreasonable"],
+    kind: "word",
+    page: "274",
+    sentence: "それは【むり】です。"
+  },
+
+  // 特
+  {
+    jp: "特に",
+    readings: ["とくに"],
+    en: ["especially", "particularly"],
+    kind: "word",
+    page: "274",
+    sentence: "私は魚が【とくに】好きです。"
+  },
+  {
+    jp: "特別",
+    readings: ["とくべつ"],
+    jpAnswers: ["特別", "特別な"],
+    en: ["special"],
+    kind: "word",
+    page: "274",
+    sentence: "今日は【とくべつ】な日です。"
+  },
+  {
+    jp: "特徴",
+    readings: ["とくちょう"],
+    en: ["characteristic", "feature"],
+    kind: "word",
+    page: "274",
+    sentence: "この町の【とくちょう】は何ですか。"
+  },
+  {
+    jp: "特急",
+    readings: ["とっきゅう"],
+    en: ["super express", "limited express", "express train"],
+    kind: "word",
+    page: "274",
+    sentence: "【とっきゅう】に乗りました。"
+  },
+
+  // 安
+  {
+    jp: "安い",
+    readings: ["やすい"],
+    en: ["cheap", "inexpensive"],
+    kind: "word",
+    page: "274",
+    sentence: "この店は【やすい】です。"
+  },
+  {
+    jp: "安全",
+    readings: ["あんぜん"],
+    jpAnswers: ["安全", "安全な"],
+    en: ["safe", "safety"],
+    kind: "word",
+    page: "274",
+    sentence: "日本は【あんぜん】です。"
+  },
+  {
+    jp: "安心",
+    readings: ["あんしん"],
+    en: ["relief", "peace of mind"],
+    kind: "word",
+    page: "274",
+    sentence: "友達に会って【あんしん】しました。"
+  },
+  {
+    jp: "不安",
+    readings: ["ふあん"],
+    jpAnswers: ["不安", "不安な"],
+    en: ["anxious", "worried", "uneasy"],
+    kind: "word",
+    page: "274",
+    sentence: "テストがあるので【ふあん】です。"
+  },
+
+  // 飯
+  {
+    jp: "ご飯",
+    readings: ["ごはん"],
+    en: ["rice", "meal", "cooked rice"],
+    kind: "word",
+    page: "274",
+    sentence: "朝、【ごはん】を食べました。"
+  },
+  {
+    jp: "朝ご飯",
+    readings: ["あさごはん"],
+    en: ["breakfast"],
+    kind: "word",
+    page: "274",
+    sentence: "【あさごはん】を食べましたか。"
+  },
+  {
+    jp: "昼ご飯",
+    readings: ["ひるごはん"],
+    en: ["lunch"],
+    kind: "word",
+    page: "274",
+    sentence: "【ひるごはん】を食べましょう。"
+  },
+  {
+    jp: "晩ご飯",
+    readings: ["ばんごはん"],
+    en: ["dinner", "supper"],
+    kind: "word",
+    page: "274",
+    sentence: "【ばんごはん】は何ですか。"
+  },
+
+  // 肉
+  {
+    jp: "肉",
+    readings: ["にく"],
+    en: ["meat"],
+    kind: "word",
+    page: "274",
+    sentence: "私は【にく】が好きです。"
+  },
+  {
+    jp: "牛肉",
+    readings: ["ぎゅうにく"],
+    en: ["beef"],
+    kind: "word",
+    page: "274",
+    sentence: "【ぎゅうにく】を買いました。"
+  },
+  {
+    jp: "豚肉",
+    readings: ["ぶたにく"],
+    en: ["pork"],
+    kind: "word",
+    page: "274",
+    sentence: "【ぶたにく】を食べました。"
+  },
+  {
+    jp: "肉屋",
+    readings: ["にくや"],
+    en: ["meat shop", "butcher"],
+    kind: "word",
+    page: "274",
+    sentence: "【にくや】で肉を買いました。"
+  },
+  {
+    jp: "筋肉",
+    readings: ["きんにく"],
+    en: ["muscle"],
+    kind: "word",
+    page: "274",
+    sentence: "運動して【きんにく】が痛いです。"
+  },
+
+  // 悪
+  {
+    jp: "悪い",
+    readings: ["わるい"],
+    en: ["bad", "wrong"],
+    kind: "word",
+    page: "275",
+    sentence: "天気が【わるい】です。"
+  },
+  {
+    jp: "気分が悪い",
+    readings: ["きぶんがわるい"],
+    en: ["to feel sick", "feel sick", "sick", "unwell"],
+    kind: "word",
+    page: "275",
+    sentence: "今日は【きぶんがわるい】です。"
+  },
+  {
+    jp: "最悪",
+    readings: ["さいあく"],
+    en: ["the worst", "worst"],
+    kind: "word",
+    page: "275",
+    sentence: "テストは【さいあく】でした。"
+  },
+  {
+    jp: "悪魔",
+    readings: ["あくま"],
+    en: ["devil", "demon"],
+    kind: "word",
+    page: "275",
+    sentence: "物語に【あくま】が出ます。"
+  },
+
+  // 体
+  {
+    jp: "体",
+    readings: ["からだ"],
+    en: ["body"],
+    kind: "word",
+    page: "275",
+    sentence: "【からだ】を休めてください。"
+  },
+  {
+    jp: "体重",
+    readings: ["たいじゅう"],
+    en: ["body weight", "weight"],
+    kind: "word",
+    page: "275",
+    sentence: "【たいじゅう】をはかりました。"
+  },
+  {
+    jp: "体操",
+    readings: ["たいそう"],
+    en: ["gymnastics", "physical exercise", "exercise"],
+    kind: "word",
+    page: "275",
+    sentence: "朝、【たいそう】をします。"
+  },
+
+  // 同
+  {
+    jp: "同じ",
+    readings: ["おなじ"],
+    en: ["same"],
+    kind: "word",
+    page: "275",
+    sentence: "私たちは【おなじ】クラスです。"
+  },
+  {
+    jp: "同僚",
+    readings: ["どうりょう"],
+    en: ["coworker", "co-worker", "colleague"],
+    kind: "word",
+    page: "275",
+    sentence: "【どうりょう】と昼ご飯を食べました。"
+  },
+  {
+    jp: "同級生",
+    readings: ["どうきゅうせい"],
+    en: ["classmate"],
+    kind: "word",
+    page: "275",
+    sentence: "彼は私の【どうきゅうせい】です。"
+  },
+  {
+    jp: "同時",
+    readings: ["どうじ"],
+    en: ["same time", "simultaneous"],
+    kind: "word",
+    page: "275",
+    sentence: "二人は【どうじ】に来ました。"
+  },
+
+  // 着
+  {
+    jp: "着く",
+    readings: ["つく"],
+    en: ["to arrive", "arrive", "to reach", "reach"],
+    kind: "word",
+    page: "275",
+    sentence: "駅に【つく】時間は何時ですか。"
+  },
+  {
+    jp: "着る",
+    readings: ["きる"],
+    en: ["to wear", "wear", "to put on", "put on"],
+    kind: "word",
+    page: "275",
+    sentence: "今日はコートを【きる】つもりです。"
+  },
+  {
+    jp: "着物",
+    readings: ["きもの"],
+    en: ["kimono"],
+    kind: "word",
+    page: "275",
+    sentence: "京都で【きもの】を着ました。"
+  },
+  {
+    jp: "水着",
+    readings: ["みずぎ"],
+    en: ["swimsuit", "swimwear"],
+    kind: "word",
+    page: "275",
+    sentence: "夏に【みずぎ】を買いました。"
+  },
+  {
+    jp: "大阪着",
+    readings: ["おおさかちゃく"],
+    en: ["arriving at Osaka", "arrival at Osaka"],
+    kind: "word",
+    page: "275",
+    sentence: "電車は【おおさかちゃく】です。"
+  },
+
+  // 空
+  {
+    jp: "空",
+    readings: ["そら"],
+    en: ["sky"],
+    kind: "word",
+    page: "275",
+    sentence: "【そら】が青いです。"
+  },
+  {
+    jp: "空港",
+    readings: ["くうこう"],
+    en: ["airport"],
+    kind: "word",
+    page: "275",
+    sentence: "【くうこう】に行きます。"
+  },
+  {
+    jp: "空気",
+    readings: ["くうき"],
+    en: ["air"],
+    kind: "word",
+    page: "275",
+    sentence: "部屋の【くうき】が悪いです。"
+  },
+  {
+    jp: "空く",
+    readings: ["あく"],
+    en: ["to be vacant", "be vacant", "to become empty", "become empty"],
+    kind: "word",
+    page: "275",
+    sentence: "席が【あく】まで待ちます。"
+  },
+  {
+    jp: "空手",
+    readings: ["からて"],
+    en: ["karate"],
+    kind: "word",
+    page: "275",
+    sentence: "妹は【からて】を習っています。"
+  },
+
+  // 港
+  {
+    jp: "港",
+    readings: ["みなと"],
+    en: ["port", "harbor", "harbour"],
+    kind: "word",
+    page: "275",
+    sentence: "【みなと】の近くに住んでいます。"
+  },
+  {
+    jp: "空港",
+    readings: ["くうこう"],
+    en: ["airport"],
+    kind: "word",
+    page: "275",
+    sentence: "明日、【くうこう】へ行きます。"
+  },
+  {
+    jp: "神戸港",
+    readings: ["こうべこう"],
+    en: ["Kobe Port", "Kobe harbor", "Kobe harbour"],
+    kind: "word",
+    page: "275",
+    sentence: "船は【こうべこう】に着きました。"
+  },
+  {
+    jp: "香港",
+    readings: ["ホンコン", "ほんこん"],
+    en: ["Hong Kong"],
+    kind: "word",
+    page: "275",
+    sentence: "【ホンコン】に行きました。"
+  },
+
+  // 昼
+  {
+    jp: "昼",
+    readings: ["ひる"],
+    en: ["noon", "daytime"],
+    kind: "word",
+    page: "275",
+    sentence: "【ひる】に会いましょう。"
+  },
+  {
+    jp: "昼ご飯",
+    readings: ["ひるごはん"],
+    en: ["lunch"],
+    kind: "word",
+    page: "275",
+    sentence: "【ひるごはん】を食べました。"
+  },
+  {
+    jp: "昼寝",
+    readings: ["ひるね"],
+    en: ["nap", "daytime nap"],
+    kind: "word",
+    page: "275",
+    sentence: "猫が【ひるね】をしています。"
+  },
+  {
+    jp: "昼休み",
+    readings: ["ひるやすみ"],
+    en: ["lunch break", "noon break"],
+    kind: "word",
+    page: "275",
+    sentence: "【ひるやすみ】に友達と話します。"
+  },
+  {
+    jp: "昼食",
+    readings: ["ちゅうしょく"],
+    en: ["lunch"],
+    kind: "word",
+    page: "275",
+    sentence: "今日は【ちゅうしょく】を食べませんでした。"
+  },
+
+  // 海
+  {
+    jp: "海",
+    readings: ["うみ"],
+    en: ["sea", "ocean"],
+    kind: "word",
+    page: "275",
+    sentence: "【うみ】で泳ぎました。"
+  },
+  {
+    jp: "日本海",
+    readings: ["にほんかい"],
+    en: ["Sea of Japan", "Japan Sea"],
+    kind: "word",
+    page: "275",
+    sentence: "【にほんかい】を見ました。"
+  },
+  {
+    jp: "海岸",
+    readings: ["かいがん"],
+    en: ["coast", "beach", "seashore"],
+    kind: "word",
+    page: "275",
+    sentence: "【かいがん】を歩きました。"
+  }
+];
+
+let currentQuestion = null;
+let correctCounter = 0;
+let totalCounter = 0;
+
+function normalizeEnglish(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[.,!?;:()]/g, "")
+    .replace(/[’']/g, "")
+    .replace(/\.\.\./g, "")
+    .replace(/\s+/g, " ")
+    .replace(/^to be /, "")
+    .replace(/^to /, "");
+}
+
+function normalizeJapanese(text) {
+  return text
+    .trim()
+    .replace(/\s+/g, "")
+    .replace(/[～~]/g, "")
+    .replace(/[。、「」『』]/g, "");
+}
+
+function getSelectedPages() {
+  const pages = [];
+
+  if (document.getElementById("page274").checked) {
+    pages.push("274");
+  }
+
+  if (document.getElementById("page275").checked) {
+    pages.push("275");
+  }
+
+  return pages;
+}
+
+function getSelectedKinds() {
+  const kinds = [];
+
+  if (document.getElementById("singleKanji").checked) {
+    kinds.push("single");
+  }
+
+  if (document.getElementById("vocabWords").checked) {
+    kinds.push("word");
+  }
+
+  return kinds;
+}
+
+function getSelectedTestTypes() {
+  const testTypes = [];
+
+  if (document.getElementById("readingTest").checked) {
+    testTypes.push("reading");
+  }
+
+  if (document.getElementById("writingTest").checked) {
+    testTypes.push("writing");
+  }
+
+  if (document.getElementById("sentenceTest").checked) {
+    testTypes.push("sentence");
+  }
+
+  if (document.getElementById("meaningTest").checked) {
+    testTypes.push("meaning");
+  }
+
+  return testTypes;
+}
+
+function getRandomItem(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function formatSentence(sentence) {
+  return sentence.replace(/【(.+?)】/g, '<span class="target">$1</span>');
+}
+
+function buildQuestionPool() {
+  const selectedPages = getSelectedPages();
+  const selectedKinds = getSelectedKinds();
+  const selectedTestTypes = getSelectedTestTypes();
+
+  const filteredCards = cards.filter(card =>
+    selectedPages.includes(card.page) &&
+    selectedKinds.includes(card.kind)
+  );
+
+  const questionPool = [];
+
+  selectedTestTypes.forEach(testType => {
+    filteredCards.forEach(card => {
+      if (testType === "sentence" && !card.sentence) {
+        return;
+      }
+
+      questionPool.push({
+        type: testType,
+        card: card
+      });
+    });
+  });
+
+  return questionPool;
+}
+
+function displayNewCard() {
+  const resultElement = document.getElementById("result");
+  const modeElement = document.getElementById("mode");
+  const cardPromptElement = document.getElementById("cardPrompt");
+  const hintElement = document.getElementById("hint");
+
+  const questionPool = buildQuestionPool();
+
+  if (questionPool.length === 0) {
+    currentQuestion = null;
+    modeElement.textContent = "";
+    cardPromptElement.textContent = "Select at least one test style, content type, and page.";
+    hintElement.textContent = "";
+    resultElement.textContent = "";
+    return;
+  }
+
+  currentQuestion = getRandomItem(questionPool);
+  const card = currentQuestion.card;
+
+  resultElement.textContent = "";
+  cardPromptElement.innerHTML = "";
+
+  if (currentQuestion.type === "reading") {
+    modeElement.textContent = "漢字の読み方：Kanji → hiragana";
+    cardPromptElement.textContent = card.jp;
+    hintElement.textContent = "Type the hiragana reading.";
+  }
+
+  if (currentQuestion.type === "writing") {
+    modeElement.textContent = "漢字を書く：Hiragana → kanji";
+    cardPromptElement.textContent = card.readings.join(" / ");
+    hintElement.textContent = "Type the kanji. Include okurigana if needed, for example 悪い or 着く.";
+  }
+
+  if (currentQuestion.type === "sentence") {
+    modeElement.textContent = "文の中で漢字を書く：Sentence kanji writing";
+    cardPromptElement.innerHTML = formatSentence(card.sentence);
+    hintElement.textContent = "Type only the kanji for the underlined hiragana.";
+  }
+
+  if (currentQuestion.type === "meaning") {
+    modeElement.textContent = "意味：Japanese → English";
+    cardPromptElement.textContent = card.jp;
+    hintElement.textContent = "Type the English meaning.";
+  }
+
+  document.getElementById("userInput").focus();
+}
+
+function checkAnswer(userInput) {
+  if (!currentQuestion) {
+    return false;
+  }
+
+  const card = currentQuestion.card;
+
+  if (currentQuestion.type === "reading") {
+    const normalizedInput = normalizeJapanese(userInput);
+
+    return card.readings.some(reading =>
+      normalizeJapanese(reading) === normalizedInput
+    );
+  }
+
+  if (currentQuestion.type === "writing" || currentQuestion.type === "sentence") {
+    const normalizedInput = normalizeJapanese(userInput);
+
+    const acceptedJapaneseAnswers = [
+      card.jp,
+      ...(card.jpAnswers || [])
+    ];
+
+    return acceptedJapaneseAnswers.some(answer =>
+      normalizeJapanese(answer) === normalizedInput
+    );
+  }
+
+  if (currentQuestion.type === "meaning") {
+    const normalizedInput = normalizeEnglish(userInput);
+
+    return card.en.some(answer =>
+      normalizeEnglish(answer) === normalizedInput
+    );
+  }
+
+  return false;
+}
+
+function getCorrectAnswerText() {
+  if (!currentQuestion) {
+    return "";
+  }
+
+  const card = currentQuestion.card;
+
+  if (currentQuestion.type === "reading") {
+    return `${card.jp} → ${card.readings.join(" / ")}`;
+  }
+
+  if (currentQuestion.type === "writing" || currentQuestion.type === "sentence") {
+    return `${card.readings.join(" / ")} → ${card.jp}`;
+  }
+
+  if (currentQuestion.type === "meaning") {
+    return `${card.jp}（${card.readings.join(" / ")}） → ${card.en[0]}`;
+  }
+
+  return "";
+}
+
+document.getElementById("myForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const userInput = document.getElementById("userInput").value.trim();
+  const resultElement = document.getElementById("result");
+  const counterElement = document.getElementById("counter");
+
+  if (!currentQuestion || userInput === "") {
+    return;
+  }
+
+  totalCounter++;
+
+  if (checkAnswer(userInput)) {
+    correctCounter++;
+    resultElement.textContent = "Correct!";
+    resultElement.style.color = "green";
+  } else {
+    resultElement.textContent = "Incorrect. Correct answer: " + getCorrectAnswerText();
+    resultElement.style.color = "red";
+  }
+
+  counterElement.textContent = `Score: ${correctCounter} / ${totalCounter}`;
+
+  document.getElementById("userInput").value = "";
+
+  setTimeout(displayNewCard, 900);
+});
+
+document.getElementById("showAnswerButton").addEventListener("click", function() {
+  const resultElement = document.getElementById("result");
+
+  resultElement.textContent = "Answer: " + getCorrectAnswerText();
+  resultElement.style.color = "blue";
+  document.getElementById("userInput").focus();
+});
+
+const allCheckboxes = document.querySelectorAll("input[type='checkbox']");
+
+allCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener("change", displayNewCard);
+});
+
+displayNewCard();
+  </script>
+</body>
+</html>

@@ -117,245 +117,331 @@
   </form>
 
   <script>
-    const vocab = [
-      // Nouns
+const vocab = [
+  // Nouns
+  {
+    jp: "奥さん",
+    reading: "おくさん",
+    en: ["wife", "your wife", "someone's wife"],
+    category: "nouns"
+  },
+  {
+    jp: "ご主人",
+    reading: "ごしゅじん",
+    en: ["husband", "your husband", "someone's husband"],
+    category: "nouns"
+  },
+  {
+    jp: "パートナー",
+    reading: "パートナー",
+    en: ["partner"],
+    category: "nouns"
+  },
+  {
+    jp: "おじさん",
+    reading: "おじさん",
+    en: ["uncle", "middle-aged man"],
+    category: "nouns"
+  },
+  {
+    jp: "おばさん",
+    reading: "おばさん",
+    en: ["aunt", "middle-aged woman"],
+    category: "nouns"
+  },
+  {
+    jp: "両親",
+    reading: "りょうしん",
+    en: ["parents"],
+    category: "nouns"
+  },
+  {
+    jp: "大家さん",
+    reading: "おおやさん",
+    en: ["landlord", "landlady"],
+    category: "nouns"
+  },
+  {
+    jp: "皆さん",
+    reading: "みなさん",
+    en: ["everyone", "all of you"],
+    category: "nouns"
+  },
+  {
+    jp: "チョコレート",
+    reading: "チョコレート",
+    en: ["chocolate"],
+    category: "nouns"
+  },
+  {
+    jp: "みかん",
+    reading: "みかん",
+    en: ["mandarin orange", "orange"],
+    category: "nouns"
+  },
+  {
+    jp: "トレーナー",
+    reading: "トレーナー",
+    en: ["sweatshirt"],
+    category: "nouns"
+  },
+  {
+    jp: "シャツ",
+    reading: "シャツ",
+    en: ["shirt"],
+    category: "nouns"
+  },
+  {
+    jp: "ネクタイ",
+    reading: "ネクタイ",
+    en: ["necktie", "tie"],
+    category: "nouns"
+  },
+  {
+    jp: "マフラー",
+    reading: "マフラー",
+    en: ["winter scarf", "scarf"],
+    category: "nouns"
+  },
+  {
+    jp: "指輪",
+    reading: "ゆびわ",
+    en: ["ring"],
+    category: "nouns"
+  },
+  {
+    jp: "鉛筆",
+    reading: "えんぴつ",
+    en: ["pencil"],
+    category: "nouns"
+  },
+  {
+    jp: "ぬいぐるみ",
+    reading: "ぬいぐるみ",
+    en: ["stuffed animal", "teddy bear", "plush toy"],
+    category: "nouns"
+  },
+  {
+    jp: "漫画",
+    reading: "まんが",
+    en: ["comic book", "manga"],
+    category: "nouns"
+  },
+  {
+    jp: "化粧品",
+    reading: "けしょうひん",
+    en: ["cosmetics", "makeup"],
+    category: "nouns"
+  },
+  {
+    jp: "ラジオ",
+    reading: "ラジオ",
+    en: ["radio"],
+    category: "nouns"
+  },
+  {
+    jp: "お皿",
+    reading: "おさら",
+    en: ["plate", "dish"],
+    category: "nouns"
+  },
+  {
+    jp: "お返し",
+    reading: "おかえし",
+    en: ["return gift", "return", "token of gratitude"],
+    category: "nouns"
+  },
+  {
+    jp: "履歴書",
+    reading: "りれきしょ",
+    en: ["resume", "résumé", "CV"],
+    category: "nouns"
+  },
+  {
+    jp: "クリスマス",
+    reading: "クリスマス",
+    en: ["Christmas"],
+    category: "nouns"
+  },
+  {
+    jp: "バレンタインデー",
+    reading: "バレンタインデー",
+    en: ["Valentine's Day", "Valentines Day"],
+    category: "nouns"
+  },
+  {
+    jp: "ホワイトデー",
+    reading: "ホワイトデー",
+    en: ["White Day"],
+    category: "nouns"
+  },
 
-      {
-        jp: "弁護士",
-        reading: "べんごし",
-        en: ["lawyer", "attorney"],
-        category: "nouns"
-      },
-      {
-        jp: "私",
-        reading: "わたくし",
-        en: ["I (formal)", "I", "me (formal)", "me"],
-        category: "nouns"
-      },
-      {
-        jp: "カレー",
-        reading: "カレー",
-        en: ["curry"],
-        category: "nouns"
-      },
+  // Adjectives
+  {
+    jp: "欲しい",
+    reading: "ほしい",
+    en: ["to want", "want", "wanted"],
+    category: "adjectives"
+  },
+  {
+    jp: "おしゃれな",
+    reading: "おしゃれな",
+    jpAnswers: ["おしゃれな", "おしゃれ"],
+    en: ["fashionable", "stylish"],
+    category: "adjectives"
+  },
+  {
+    jp: "けちな",
+    reading: "けちな",
+    jpAnswers: ["けちな", "けち"],
+    en: ["stingy", "cheap"],
+    category: "adjectives"
+  },
 
-      {
-        jp: "セーター",
-        reading: "セーター",
-        en: ["sweater", "jumper"],
-        category: "nouns"
-      },
-      {
-        jp: "楽器",
-        reading: "がっき",
-        en: ["musical instrument", "instrument"],
-        category: "nouns"
-      },
-      {
-        jp: "ゴルフ",
-        reading: "ゴルフ",
-        en: ["golf"],
-        category: "nouns"
-      },
-      {
-        jp: "バイク",
-        reading: "バイク",
-        en: ["motorcycle", "motorbike", "bike"],
-        category: "nouns"
-      },
-      {
-        jp: "外国語",
-        reading: "がいこくご",
-        en: ["foreign language"],
-        category: "nouns"
-      },
-      {
-        jp: "言葉",
-        reading: "ことば",
-        en: ["language", "word"],
-        category: "nouns"
-      },
-      {
-        jp: "文法",
-        reading: "ぶんぽう",
-        en: ["grammar"],
-        category: "nouns"
-      },
-      {
-        jp: "アプリ",
-        reading: "アプリ",
-        en: ["application", "app"],
-        category: "nouns"
-      },
-      {
-        jp: "アパート",
-        reading: "アパート",
-        en: ["apartment", "smaller apartment building", "small apartment building"],
-        category: "nouns"
-      },
-      {
-        jp: "マンション",
-        reading: "マンション",
-        en: ["larger apartment building", "condominium", "larger apartment", "apartment building"],
-        category: "nouns"
-      },
-      {
-        jp: "空港",
-        reading: "くうこう",
-        en: ["airport"],
-        category: "nouns"
-      },
-      {
-        jp: "店",
-        reading: "みせ",
-        en: ["shop", "store"],
-        category: "nouns"
-      },
-      {
-        jp: "物価",
-        reading: "ぶっか",
-        en: ["consumer prices", "prices"],
-        category: "nouns"
-      },
-      {
-        jp: "広告",
-        reading: "こうこく",
-        en: ["advertisement", "advertising", "ad"],
-        category: "nouns"
-      },
-      {
-        jp: "募集",
-        reading: "ぼしゅう",
-        en: ["recruitment", "recruiting"],
-        category: "nouns"
-      },
+  // Verbs
+  {
+    jp: "送る",
+    reading: "おくる",
+    en: ["to send", "send"],
+    category: "verbs"
+  },
+  {
+    jp: "似合う",
+    reading: "にあう",
+    en: ["to look good on", "look good on", "to suit", "suit"],
+    category: "verbs"
+  },
+  {
+    jp: "あきらめる",
+    reading: "あきらめる",
+    en: ["to give up", "give up"],
+    category: "verbs"
+  },
+  {
+    jp: "あげる",
+    reading: "あげる",
+    en: ["to give", "give", "to give to others"],
+    category: "verbs"
+  },
+  {
+    jp: "くれる",
+    reading: "くれる",
+    en: ["to give me", "give me", "to give us", "give us"],
+    category: "verbs"
+  },
+  {
+    jp: "できる",
+    reading: "できる",
+    en: ["to come into existence", "come into existence", "to be made", "be made", "can do"],
+    category: "verbs"
+  },
+  {
+    jp: "相談する",
+    reading: "そうだんする",
+    en: ["to consult", "consult", "to ask for advice", "ask for advice"],
+    category: "verbs"
+  },
+  {
+    jp: "注意する",
+    reading: "ちゅういする",
+    en: ["to give warning", "give warning", "to warn", "warn", "to watch out", "watch out"],
+    category: "verbs"
+  },
+  {
+    jp: "プロポーズする",
+    reading: "プロポーズする",
+    en: ["to propose marriage", "propose marriage", "to propose", "propose"],
+    category: "verbs"
+  },
 
+  // Adverbs and expressions
+  {
+    jp: "～くん",
+    reading: "～くん",
+    en: ["Mr.", "Ms.", "casual suffix"],
+    category: "expressions"
+  },
+  {
+    jp: "～たち",
+    reading: "～たち",
+    en: ["plural suffix", "makes a noun plural"],
+    category: "expressions"
+  },
+  {
+    jp: "私たち",
+    reading: "わたしたち",
+    en: ["we", "us"],
+    category: "expressions"
+  },
+  {
+    jp: "こんな",
+    reading: "こんな",
+    en: ["like this", "this kind of"],
+    category: "expressions"
+  },
+  {
+    jp: "急に",
+    reading: "きゅうに",
+    en: ["suddenly"],
+    category: "expressions"
+  },
+  {
+    jp: "ちょうど",
+    reading: "ちょうど",
+    en: ["exactly", "just"],
+    category: "expressions"
+  },
+  {
+    jp: "よく",
+    reading: "よく",
+    en: ["well", "often"],
+    category: "expressions"
+  },
+  {
+    jp: "さあ",
+    reading: "さあ",
+    en: ["I am not sure", "I don't know"],
+    category: "expressions"
+  },
+  {
+    jp: "どうしたらいい",
+    reading: "どうしたらいい",
+    en: ["what should one do", "what should I do", "what should we do"],
+    category: "expressions"
+  },
 
-      // I-adjectives
-      {
-        jp: "うれしい",
-        reading: "うれしい",
-        en: ["glad", "happy"],
-        category: "adjectives"
-      },
-      {
-        jp: "気分が悪い",
-        reading: "きぶんがわるい",
-        en: ["to feel sick", "feel sick", "sick", "to feel unwell", "feel unwell"],
-        category: "adjectives"
-      },
-      {
-        jp: "近い",
-        reading: "ちかい",
-        en: ["close", "near", "nearby"],
-        category: "adjectives"
-      },
-      {
-        jp: "だめな",
-        reading: "だめな",
-        jpAnswers: ["だめな", "だめ"],
-        en: ["no good", "not good", "bad", "useless"],
-        category: "adjectives"
-      },
-
-      // U-verbs
-      {
-        jp: "編む",
-        reading: "あむ",
-        en: ["to knit", "knit"],
-        category: "verbs"
-      },
-      {
-        jp: "頑張る",
-        reading: "がんばる",
-        en: ["to do one's best", "do one's best", "try hard", "to try hard", "do your best", "to do your best"],
-        category: "verbs"
-      },
-      {
-        jp: "磨く",
-        reading: "みがく",
-        en: ["to brush", "brush", "to brush teeth", "brush teeth", "to polish", "polish"],
-        category: "verbs"
-      },
-      {
-        jp: "約束を守る",
-        reading: "やくそくをまもる",
-        en: ["to keep a promise", "keep a promise"],
-        category: "verbs"
-      },
-
-      // Irregular verb
-      {
-        jp: "感動する",
-        reading: "かんどうする",
-        en: ["to be moved", "be moved", "moved", "to be touched", "be touched", "touched", "to be moved/touched", "be moved/touched"],
-        category: "verbs"
-      },
-
-      // Adverbs and expressions
-      {
-        jp: "～と申します",
-        reading: "～ともうします",
-        en: ["my name is ...", "my name is", "I am called", "I am"],
-        category: "expressions"
-      },
-
-      // Numbers / days
-      {
-        jp: "一日",
-        reading: "いちにち",
-        en: ["one day", "one day duration"],
-        category: "numbers"
-      },
-      {
-        jp: "二日",
-        reading: "ふつか",
-        en: ["two days"],
-        category: "numbers"
-      },
-      {
-        jp: "三日",
-        reading: "みっか",
-        en: ["three days"],
-        category: "numbers"
-      },
-      {
-        jp: "四日",
-        reading: "よっか",
-        en: ["four days"],
-        category: "numbers"
-      },
-      {
-        jp: "五日",
-        reading: "いつか",
-        en: ["five days"],
-        category: "numbers"
-      },
-      {
-        jp: "六日",
-        reading: "むいか",
-        en: ["six days"],
-        category: "numbers"
-      },
-      {
-        jp: "八日",
-        reading: "ようか",
-        en: ["eight days"],
-        category: "numbers"
-      },
-      {
-        jp: "九日",
-        reading: "ここのか",
-        en: ["nine days"],
-        category: "numbers"
-      },
-      {
-        jp: "十日",
-        reading: "とおか",
-        en: ["ten days"],
-        category: "numbers"
-      }
-    ];
+  // Counters
+  {
+    jp: "～個",
+    reading: "～こ",
+    en: ["counter for small items", "generic counter for smaller items"],
+    category: "numbers"
+  },
+  {
+    jp: "～冊",
+    reading: "～さつ",
+    en: ["counter for bound volumes", "counter for books"],
+    category: "numbers"
+  },
+  {
+    jp: "～台",
+    reading: "～だい",
+    en: ["counter for equipment", "counter for machines", "counter for vehicles"],
+    category: "numbers"
+  },
+  {
+    jp: "～匹",
+    reading: "～ひき",
+    en: ["counter for small animals", "counter for smaller animals"],
+    category: "numbers"
+  },
+  {
+    jp: "～本",
+    reading: "～ほん",
+    en: ["counter for long objects", "counter for cylindrical objects"],
+    category: "numbers"
+  }
+];
 
     let currentCard = null;
     let currentDirection = null;
